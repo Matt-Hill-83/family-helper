@@ -1,0 +1,20 @@
+type List @model {
+  id: ID!
+  title: String!
+  listItems: [ListItem]
+}
+
+type ListItem @model {
+  id: ID!
+  title: String!
+  quantity: Int
+  done: Boolean
+  list: List
+  actions: [Action]
+}
+
+type Action @model {
+  id: ID!
+  action: String!
+  listItem: ListItem
+}
