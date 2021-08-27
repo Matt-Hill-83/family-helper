@@ -1,7 +1,10 @@
 type List @model {
   id: ID!
   title: String!
-  listItems: [ListItem]
+  description: String
+  imageKey: String
+  slug: String!
+  listItems: [ListItem] @connection(name: "ListListItems")
 }
 
 type ListItem @model {
@@ -9,12 +12,12 @@ type ListItem @model {
   title: String!
   quantity: Int
   done: Boolean
-  list: List
-  actions: [Action]
+  list: List @connection(name: "ListListItems")
+  actions: [Action] @connection(name: "ListItemAction")
 }
 
 type Action @model {
   id: ID!
-  action: String!
-  listItem: ListItem
+  action: String
+  listItem: ListItem @connection(name: "ListItemAction")
 }
