@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
 
 import DateEditor from "react-tabulator/lib/editors/DateEditor"
@@ -16,7 +16,7 @@ function SimpleButton(props) {
   return <button onClick={() => alert(rowData.name)}>{cellValue}</button>
 }
 
-const data = [
+const data1 = [
   {
     id: 1,
     name: "Oli Bob",
@@ -132,14 +132,14 @@ const editableColumns = [
   },
 ]
 
-class Table01 extends React.Component {
-  state = {
-    data: [],
-    selectedName: "",
-  }
-  ref = null
+function Table01(props) {
+  const [data, setData] = useState(data1)
 
-  columns = [
+  useEffect(() => {
+    setData(props.data)
+  }, [props.data])
+
+  const columns = [
     { title: "Name", field: "name", width: 150 },
     { title: "Age", field: "age", hozAlign: "left", formatter: "progress" },
     { title: "Favourite Color", field: "color" },
@@ -151,55 +151,42 @@ class Table01 extends React.Component {
       hozAlign: "center",
       formatter: "tickCross",
     },
-    {
-      title: "Custom",
-      field: "custom",
-      hozAlign: "center",
-      editor: "input",
-      formatter: reactFormatter(
-        <SimpleButton
-          onSelect={(name) => {
-            this.setState({ selectedName: name })
-            alert(name)
-          }}
-        />
-      ),
-    },
+    // {
+    //   title: "Custom",
+    //   field: "custom",
+    //   hozAlign: "center",
+    //   editor: "input",
+    //   formatter: reactFormatter(
+    //     <SimpleButton
+    //       onSelect={(name) => {
+    //         setState({ selectedName: name })
+    //         alert(name)
+    //       }}
+    //     />
+    //   ),
+    // },
   ]
 
-  rowClick = (e, row) => {
-    console.log("ref table: ", this.ref.table) // this is the Tabulator table instance
-    console.log(`rowClick id: \${row.getData().id}`, row, e)
-    this.setState({ selectedName: row.getData().name })
+  // const setData = () => {
+  //   setState({ data })
+  // }
+
+  const options = {
+    // height: 150,
+    // movableRows: true,
   }
 
-  setData = () => {
-    this.setState({ data })
-  }
-
-  clearData = () => {
-    this.setState({ data: [] })
-  }
-
-  render() {
-    const options = {
-      // height: 150,
-      // movableRows: true,
-    }
-
-    return (
-      <div>
-        <ReactTabulator
-          columns={editableColumns}
-          data={data}
-          rowClick={this.rowClick}
-          data-custom-attr="test-custom-attribute"
-          options={options}
-          className="custom-css-class"
-        />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <ReactTabulator
+        columns={columns}
+        data={data}
+        data-custom-attr="test-custom-attribute"
+        options={options}
+        className="custom-css-class"
+      />
+    </div>
+  )
 }
 
 export default Table01
