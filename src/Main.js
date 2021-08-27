@@ -21,6 +21,7 @@ import ListModal from "./components/modals/ListModal"
 
 import "semantic-ui-css/semantic.min.css"
 import "./App.css"
+import Table01 from "./components/Table01/Table01"
 
 Amplify.configure(awsConfig)
 
@@ -169,7 +170,8 @@ function Main() {
                 }}
               />
               <Route path="/">
-                <Lists lists={state.lists} dispatch={dispatch} />
+                {/* <Lists lists={state.lists} dispatch={dispatch} /> */}
+                <Table01 lists={state.lists} dispatch={dispatch} />
               </Route>
             </Switch>
           </BrowserRouter>
