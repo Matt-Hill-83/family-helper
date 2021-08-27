@@ -1,8 +1,9 @@
-import React from 'react';
-import { Item } from 'semantic-ui-react';
-import List from './List';
+import React from "react"
+import { Item } from "semantic-ui-react"
+import List from "./List"
 
 function Lists({ lists, dispatch }) {
+  console.log("lists", lists) // zzz
   return (
     <div>
       <Item.Group>
@@ -13,7 +14,7 @@ function Lists({ lists, dispatch }) {
         ))}
       </Item.Group>
     </div>
-  );
+  )
 }
 
-export default Lists;
+export default Lists
