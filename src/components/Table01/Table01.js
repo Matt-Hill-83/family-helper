@@ -80,57 +80,6 @@ const petOptions = [
   { id: "dog", name: "dog" },
   { id: "fish", name: "fish" },
 ]
-const editableColumns = [
-  {
-    title: "Name",
-    field: "name",
-    width: 150,
-    editor: "input",
-    headerFilter: "input",
-  },
-  {
-    title: "Age",
-    field: "age",
-    hozAlign: "left",
-    formatter: "progress",
-    editor: "progress",
-  },
-  {
-    title: "Favourite Color",
-    field: "color",
-    editor: "select",
-    editorParams: {
-      allowEmpty: true,
-      showListOnEmpty: true,
-      values: colorOptions,
-    },
-    headerFilter: "select",
-    headerFilterParams: { values: colorOptions },
-  },
-  {
-    title: "Date Of Birth",
-    field: "dob",
-    sorter: "date",
-    editor: DateEditor,
-    editorParams: { format: "MM/DD/YYYY" },
-  },
-  {
-    title: "Pets",
-    field: "pets",
-    sorter: (a, b) => a.toString().localeCompare(b.toString()),
-    // editor: MultiSelectEditor,
-    editorParams: { values: petOptions },
-    formatter: MultiValueFormatter,
-    formatterParams: { style: "PILL" },
-  },
-  {
-    title: "Passed?",
-    field: "passed",
-    hozAlign: "center",
-    formatter: "tickCross",
-    editor: true,
-  },
-]
 
 function Table01(props) {
   const [data, setData] = useState(data1)
@@ -166,10 +115,6 @@ function Table01(props) {
     //   ),
     // },
   ]
-
-  // const setData = () => {
-  //   setState({ data })
-  // }
 
   const options = {
     // height: 150,

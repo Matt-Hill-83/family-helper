@@ -11,7 +11,7 @@ import {
   onDeleteList,
   onUpdateList,
 } from "./graphql/subscriptions"
-import { listLists } from "./graphql/queries"
+import { listLists, listTools } from "./graphql/queries"
 import { deleteList } from "./graphql/mutations"
 
 import MainHeader from "./components/headers/MainHeader"
@@ -96,8 +96,13 @@ async function deleteListById(id) {
 function Main() {
   const [state, dispatch] = useReducer(listReducer, intialState)
   async function fetchList() {
-    const { data } = await API.graphql(graphqlOperation(listLists))
-    dispatch({ type: "UPDATE_LISTS", value: data.listLists.items })
+    // const { data } = await API.graphql(graphqlOperation(listLists))
+    // dispatch({ type: "UPDATE_LISTS", value: data.listLists.items })
+
+    const { data } = await API.graphql(graphqlOperation(listTools))
+
+    console.log("data", data) // zzz
+    dispatch({ type: "UPDATE_LISTS", value: data.listTools.items })
   }
 
   useEffect(() => {
