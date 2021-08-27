@@ -21,3 +21,35 @@ type Action @model {
   action: String
   listItem: ListItem @connection(name: "ListItemAction")
 }
+
+#
+#
+type Tool @model {
+  id: ID!
+  name: String
+  description: String
+  location: String
+  type: ToolType @connection(name: "ToolToolType")
+}
+
+type ToolType @model {
+  id: ID!
+  name: String
+  description: String
+  isFungible: Boolean
+  tool: Tool @connection(name: "ToolToolType")
+}
+
+# type Reservation @model {
+#   id: ID!
+#   name: String
+#   description: String
+#   user: User @connection(name: "ReservationUser")
+#   tools: Tool @connection(name: "ReservationTool")
+# }
+
+# type User @model {
+#   id: ID!
+#   name: String
+#   title: String
+# }

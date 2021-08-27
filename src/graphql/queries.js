@@ -167,3 +167,113 @@ export const listActions = /* GraphQL */ `
     }
   }
 `;
+export const getTool = /* GraphQL */ `
+  query GetTool($id: ID!) {
+    getTool(id: $id) {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTools = /* GraphQL */ `
+  query ListTools(
+    $filter: ModelToolFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTools(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getToolType = /* GraphQL */ `
+  query GetToolType($id: ID!) {
+    getToolType(id: $id) {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listToolTypes = /* GraphQL */ `
+  query ListToolTypes(
+    $filter: ModelToolTypeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listToolTypes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

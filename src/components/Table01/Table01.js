@@ -183,36 +183,19 @@ class Table01 extends React.Component {
 
   render() {
     const options = {
-      height: 150,
-      movableRows: true,
+      // height: 150,
+      // movableRows: true,
     }
+
     return (
       <div>
         <ReactTabulator
-          ref={(ref) => (this.ref = ref)}
-          columns={this.columns}
-          data={data}
-          rowClick={this.rowClick}
-          options={options}
-          data-custom-attr="test-custom-attribute"
-          className="custom-css-class"
-        />
-        <i>
-          Selected Name: <strong>{this.state.selectedName}</strong>
-        </i>
-
-        <h3>
-          Asynchronous data: (e.g. fetch) -{" "}
-          <button onClick={this.setData}>Set Data</button>
-          <button onClick={this.clearData}>Clear</button>
-        </h3>
-        <ReactTabulator columns={this.columns} data={this.state.data} />
-
-        <h3>Editable Table</h3>
-        <ReactTabulator
           columns={editableColumns}
           data={data}
-          footerElement={<span>Footer</span>}
+          rowClick={this.rowClick}
+          data-custom-attr="test-custom-attribute"
+          options={options}
+          className="custom-css-class"
         />
       </div>
     )

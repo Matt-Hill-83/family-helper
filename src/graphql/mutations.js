@@ -289,3 +289,189 @@ export const deleteAction = /* GraphQL */ `
     }
   }
 `;
+export const createTool = /* GraphQL */ `
+  mutation CreateTool(
+    $input: CreateToolInput!
+    $condition: ModelToolConditionInput
+  ) {
+    createTool(input: $input, condition: $condition) {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTool = /* GraphQL */ `
+  mutation UpdateTool(
+    $input: UpdateToolInput!
+    $condition: ModelToolConditionInput
+  ) {
+    updateTool(input: $input, condition: $condition) {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTool = /* GraphQL */ `
+  mutation DeleteTool(
+    $input: DeleteToolInput!
+    $condition: ModelToolConditionInput
+  ) {
+    deleteTool(input: $input, condition: $condition) {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createToolType = /* GraphQL */ `
+  mutation CreateToolType(
+    $input: CreateToolTypeInput!
+    $condition: ModelToolTypeConditionInput
+  ) {
+    createToolType(input: $input, condition: $condition) {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateToolType = /* GraphQL */ `
+  mutation UpdateToolType(
+    $input: UpdateToolTypeInput!
+    $condition: ModelToolTypeConditionInput
+  ) {
+    updateToolType(input: $input, condition: $condition) {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteToolType = /* GraphQL */ `
+  mutation DeleteToolType(
+    $input: DeleteToolTypeInput!
+    $condition: ModelToolTypeConditionInput
+  ) {
+    deleteToolType(input: $input, condition: $condition) {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

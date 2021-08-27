@@ -262,3 +262,171 @@ export const onDeleteAction = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTool = /* GraphQL */ `
+  subscription OnCreateTool {
+    onCreateTool {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTool = /* GraphQL */ `
+  subscription OnUpdateTool {
+    onUpdateTool {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTool = /* GraphQL */ `
+  subscription OnDeleteTool {
+    onDeleteTool {
+      id
+      name
+      description
+      location
+      type {
+        id
+        name
+        description
+        isFungible
+        tool {
+          id
+          name
+          description
+          location
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateToolType = /* GraphQL */ `
+  subscription OnCreateToolType {
+    onCreateToolType {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateToolType = /* GraphQL */ `
+  subscription OnUpdateToolType {
+    onUpdateToolType {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteToolType = /* GraphQL */ `
+  subscription OnDeleteToolType {
+    onDeleteToolType {
+      id
+      name
+      description
+      isFungible
+      tool {
+        id
+        name
+        description
+        location
+        type {
+          id
+          name
+          description
+          isFungible
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
