@@ -1,22 +1,27 @@
-import "./App.css"
 import { useEffect, useReducer } from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { Button, Container, Icon } from "semantic-ui-react"
+
+import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react"
 import Amplify, { API, graphqlOperation } from "aws-amplify"
 import awsConfig from "./aws-exports"
-import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react"
-import { listLists } from "./graphql/queries"
-import "semantic-ui-css/semantic.min.css"
-import MainHeader from "./components/headers/MainHeader"
-import Lists from "./components/Lists/Lists"
-import { Button, Container, Icon } from "semantic-ui-react"
-import { deleteList } from "./graphql/mutations"
+
 import {
   onCreateList,
   onDeleteList,
   onUpdateList,
 } from "./graphql/subscriptions"
-import ListModal from "./components/modals/ListModal"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { listLists } from "./graphql/queries"
+import { deleteList } from "./graphql/mutations"
+
+import MainHeader from "./components/headers/MainHeader"
+import Lists from "./components/Lists/Lists"
 import ListItems from "./ListItems"
+import ListModal from "./components/modals/ListModal"
+
+import "semantic-ui-css/semantic.min.css"
+import "./App.css"
+
 Amplify.configure(awsConfig)
 
 const intialState = {

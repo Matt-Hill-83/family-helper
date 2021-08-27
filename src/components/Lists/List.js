@@ -32,11 +32,11 @@ function List(props) {
         as={Image}
         size="tiny"
         src={imageUrl}
-      ></Dimmer.Dimmable>
+      />
       <Item.Content>
-        {/* <Item.Header as={Link} to={`/list/${slug}`}>
+        <Item.Header as={Link} to={`/list/${slug}`}>
           {title}
-        </Item.Header> */}
+        </Item.Header>
         <Item.Description>{description}</Item.Description>
         <Item.Extra>
           {new Date(createdAt).toDateString()}

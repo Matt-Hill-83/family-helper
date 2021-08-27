@@ -1,27 +1,27 @@
 import API, { graphqlOperation } from "@aws-amplify/api"
 import React, { useEffect, useState } from "react"
 import { Header, Segment, List } from "semantic-ui-react"
-// import { searchListItems } from "./graphql/customQueries"
+import { searchListItems } from "./graphql/customQueries"
 
 function ListItems({ title, slug }) {
   const [items, setItems] = useState([])
-  // async function fetchItems() {
-  //   const { data } = await API.graphql(
-  //     graphqlOperation(searchListItems, {
-  //       filter: {
-  //         slug: {
-  //           eq: slug,
-  //         },
-  //       },
-  //     })
-  //   )
-  //   if (data !== null) {
-  //     console.log(data.searchLists.items[0].listItems.items)
-  //     setItems(data.searchLists.items[0].listItems.items)
-  //   }
-  // }
+  async function fetchItems() {
+    const { data } = await API.graphql(
+      graphqlOperation(searchListItems, {
+        filter: {
+          slug: {
+            eq: slug,
+          },
+        },
+      })
+    )
+    if (data !== null) {
+      console.log(data.searchLists.items[0].listItems.items)
+      setItems(data.searchLists.items[0].listItems.items)
+    }
+  }
   useEffect(() => {
-    // fetchItems();
+    fetchItems()
   }, [slug])
 
   return (
