@@ -12,73 +12,10 @@ function SimpleButton(props) {
   return <button onClick={() => alert(rowData.name)}>{cellValue}</button>
 }
 
-const data1 = [
-  {
-    id: 1,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-  {
-    id: 2,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-  {
-    id: 3,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-  {
-    id: 4,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-  {
-    id: 5,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-  {
-    id: 6,
-    name: "Oli Bob",
-    description: "12",
-    location: "red",
-    qty: "01/01/1980",
-    user: 5,
-    type: true,
-    pets: ["cat", "dog"],
-  },
-]
-console.log("data1", data1) // zzz
 function Table01(props) {
   const { lists } = props
   console.log("lists", lists) // zzzf
-  const [data, setData] = useState(data1)
+  const [data, setData] = useState([])
 
   const [selectedName, setSelectedName] = useState("test")
 
@@ -88,6 +25,7 @@ function Table01(props) {
 
   const columns = [
     { title: "Name", field: "name", width: 150 },
+    { title: "Type", field: "type", width: 150 },
     // { title: "Desc", field: "desc", hozAlign: "left", formatter: "progress" },
     { title: "Desc", field: "description", hozAlign: "left" },
     { title: "Location", field: "location" },
@@ -124,7 +62,7 @@ function Table01(props) {
     const output = []
     data.forEach((row) => {
       const newRow = { ...row }
-
+      newRow.type = newRow.type === null ? "test" : newRow.type
       output.push(newRow)
     })
     return output

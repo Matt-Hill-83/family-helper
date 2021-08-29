@@ -3,13 +3,8 @@ import React, { useState } from "react"
 import { Button, Form, Modal } from "semantic-ui-react"
 import slugify from "slugify"
 import { createList, createTool, updateList } from "../../graphql/mutations"
-import { useS3 } from "../../hooks/useS3"
-import UploadImage from "../HandleImages/UploadImage"
 
 function ListModal({ state, dispatch }) {
-  // const [uploadToS3] = useS3()
-  // const [fileToUpload, setFileToUpload] = useState()
-
   async function saveList() {
     // const imageKey = uploadToS3(fileToUpload)
     // console.log("imagekey", imageKey)
