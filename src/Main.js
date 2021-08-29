@@ -101,7 +101,6 @@ function Main() {
 
     const { data } = await API.graphql(graphqlOperation(listTools))
 
-    console.log("data", data) // zzz
     dispatch({ type: "UPDATE_LISTS", value: data.listTools.items })
   }
 

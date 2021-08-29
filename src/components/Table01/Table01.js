@@ -16,56 +16,70 @@ const data1 = [
   {
     id: 1,
     name: "Oli Bob",
-    age: "12",
-    color: "red",
-    dob: "01/01/1980",
-    rating: 5,
-    passed: true,
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
     pets: ["cat", "dog"],
   },
   {
     id: 2,
-    name: "Mary May",
-    age: "1",
-    color: "green",
-    dob: "12/05/1989",
-    rating: 4,
-    passed: true,
-    pets: ["cat"],
+    name: "Oli Bob",
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
+    pets: ["cat", "dog"],
+  },
+  {
+    id: 3,
+    name: "Oli Bob",
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
+    pets: ["cat", "dog"],
+  },
+  {
+    id: 4,
+    name: "Oli Bob",
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
+    pets: ["cat", "dog"],
   },
   {
     id: 5,
-    name: "Margret Marmajuke",
-    age: "16",
-    color: "yellow",
-    dob: "07/01/1999",
-    rating: 4,
-    passed: false,
+    name: "Oli Bob",
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
+    pets: ["cat", "dog"],
   },
   {
     id: 6,
-    name: "Van Ng",
-    age: "37",
-    color: "green",
-    dob: "06/10/1982",
-    rating: 4,
-    passed: true,
-    pets: ["dog", "fish"],
-  },
-  {
-    id: 7,
-    name: "Duc Ng",
-    age: "37",
-    color: "yellow",
-    dob: "10/10/1982",
-    rating: 4,
-    passed: true,
-    pets: ["dog"],
+    name: "Oli Bob",
+    description: "12",
+    location: "red",
+    qty: "01/01/1980",
+    user: 5,
+    type: true,
+    pets: ["cat", "dog"],
   },
 ]
-
+console.log("data1", data1) // zzz
 function Table01(props) {
+  const { lists } = props
+  console.log("lists", lists) // zzz
   const [data, setData] = useState(data1)
+
   const [selectedName, setSelectedName] = useState("test")
 
   useEffect(() => {
@@ -74,30 +88,31 @@ function Table01(props) {
 
   const columns = [
     { title: "Name", field: "name", width: 150 },
-    { title: "Age", field: "age", hozAlign: "left", formatter: "progress" },
-    { title: "Favourite Color", field: "color" },
-    { title: "Date Of Birth", field: "dob" },
-    { title: "Rating", field: "rating", hozAlign: "center", formatter: "star" },
-    {
-      title: "Passed?",
-      field: "passed",
-      hozAlign: "center",
-      formatter: "tickCross",
-    },
-    {
-      title: "Custom",
-      field: "custom",
-      hozAlign: "center",
-      editor: "input",
-      formatter: reactFormatter(
-        <SimpleButton
-          onSelect={(name) => {
-            setSelectedName(selectedName)
-            alert(name)
-          }}
-        />
-      ),
-    },
+    // { title: "Desc", field: "desc", hozAlign: "left", formatter: "progress" },
+    { title: "Desc", field: "desc", hozAlign: "left" },
+    { title: "Location", field: "location" },
+    // { title: "Qty", field: "qty" },
+    // { title: "User", field: "user", hozAlign: "center", formatter: "star" },
+    // {
+    //   title: "Passed?",
+    //   field: "type",
+    //   hozAlign: "center",
+    //   formatter: "tickCross",
+    // },
+    // {
+    //   title: "Custom",
+    //   field: "custom",
+    //   hozAlign: "center",
+    //   editor: "input",
+    //   formatter: reactFormatter(
+    //     <SimpleButton
+    //       onSelect={(name) => {
+    //         setSelectedName(selectedName)
+    //         alert(name)
+    //       }}
+    //     />
+    //   ),
+    // },
   ]
 
   const options = {
@@ -105,11 +120,24 @@ function Table01(props) {
     // movableRows: true,
   }
 
+  const transformData = ({ data = [] }) => {
+    const output = []
+    data.forEach((row) => {
+      const newRow = { ...row }
+
+      output.push(newRow)
+    })
+    return output
+  }
+
+  const transformedData = transformData({ data: data1 })
+  console.log("transformedData", transformedData) // zzz
   return (
     <div>
       <ReactTabulator
         columns={columns}
-        data={data}
+        data={transformedData}
+        // data={data}
         data-custom-attr="test-custom-attribute"
         options={options}
         className="custom-css-class"
