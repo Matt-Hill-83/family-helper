@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react"
 import "./styles.css"
 
-import DateEditor from "react-tabulator/lib/editors/DateEditor"
-import MultiValueFormatter from "react-tabulator/lib/formatters/MultiValueFormatter"
-// import MultiSelectEditor from "react-tabulator/lib/editors/MultiSelectEditor";
-
 import "react-tabulator/lib/styles.css" // default theme
 import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css" // use Theme(s)
 
@@ -68,21 +64,9 @@ const data1 = [
   },
 ]
 
-// Editable Example:
-const colorOptions = {
-  "": "&nbsp;",
-  red: "red",
-  green: "green",
-  yellow: "yellow",
-}
-const petOptions = [
-  { id: "cat", name: "cat" },
-  { id: "dog", name: "dog" },
-  { id: "fish", name: "fish" },
-]
-
 function Table01(props) {
   const [data, setData] = useState(data1)
+  const [selectedName, setSelectedName] = useState("test")
 
   useEffect(() => {
     setData(props.data)
@@ -100,20 +84,20 @@ function Table01(props) {
       hozAlign: "center",
       formatter: "tickCross",
     },
-    // {
-    //   title: "Custom",
-    //   field: "custom",
-    //   hozAlign: "center",
-    //   editor: "input",
-    //   formatter: reactFormatter(
-    //     <SimpleButton
-    //       onSelect={(name) => {
-    //         setState({ selectedName: name })
-    //         alert(name)
-    //       }}
-    //     />
-    //   ),
-    // },
+    {
+      title: "Custom",
+      field: "custom",
+      hozAlign: "center",
+      editor: "input",
+      formatter: reactFormatter(
+        <SimpleButton
+          onSelect={(name) => {
+            setSelectedName(selectedName)
+            alert(name)
+          }}
+        />
+      ),
+    },
   ]
 
   const options = {

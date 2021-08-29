@@ -7,6 +7,8 @@ type List @model {
   listItems: [ListItem] @connection(name: "ListListItems")
 }
 
+# TODO - link table to tools list
+
 type ListItem @model {
   id: ID!
   title: String!
