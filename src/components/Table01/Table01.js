@@ -77,7 +77,7 @@ const data1 = [
 console.log("data1", data1) // zzz
 function Table01(props) {
   const { lists } = props
-  console.log("lists", lists) // zzz
+  console.log("lists", lists) // zzzf
   const [data, setData] = useState(data1)
 
   const [selectedName, setSelectedName] = useState("test")
@@ -89,7 +89,7 @@ function Table01(props) {
   const columns = [
     { title: "Name", field: "name", width: 150 },
     // { title: "Desc", field: "desc", hozAlign: "left", formatter: "progress" },
-    { title: "Desc", field: "desc", hozAlign: "left" },
+    { title: "Desc", field: "description", hozAlign: "left" },
     { title: "Location", field: "location" },
     // { title: "Qty", field: "qty" },
     // { title: "User", field: "user", hozAlign: "center", formatter: "star" },
@@ -99,20 +99,20 @@ function Table01(props) {
     //   hozAlign: "center",
     //   formatter: "tickCross",
     // },
-    // {
-    //   title: "Custom",
-    //   field: "custom",
-    //   hozAlign: "center",
-    //   editor: "input",
-    //   formatter: reactFormatter(
-    //     <SimpleButton
-    //       onSelect={(name) => {
-    //         setSelectedName(selectedName)
-    //         alert(name)
-    //       }}
-    //     />
-    //   ),
-    // },
+    {
+      title: "Custom",
+      field: "custom",
+      hozAlign: "center",
+      editor: "input",
+      formatter: reactFormatter(
+        <SimpleButton
+          onSelect={(name) => {
+            setSelectedName(selectedName)
+            alert(name)
+          }}
+        />
+      ),
+    },
   ]
 
   const options = {
@@ -130,7 +130,8 @@ function Table01(props) {
     return output
   }
 
-  const transformedData = transformData({ data: data1 })
+  const transformedData = transformData({ data: lists })
+  // const transformedData = transformData({ data: data1 })
   console.log("transformedData", transformedData) // zzz
   return (
     <div>
