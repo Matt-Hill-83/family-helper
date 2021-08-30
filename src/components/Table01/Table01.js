@@ -21,15 +21,8 @@ const Table01 = (props) => {
   const tableRef = useRef(null)
 
   const onCellEditted2 = (newData) => {
-    const tableData = tableRef?.current?.state?.data || []
-
-    onCellEditted(newData, tableData)
-  }
-
-  const options = {
-    // height: 150,
-    // movableRows: true,
-    cellEdited: (newData) => onCellEditted2(newData),
+    // const tableData = tableRef?.current?.state?.data || []
+    onCellEditted(newData)
   }
 
   const transformData = ({ data = [] }) => {
@@ -74,6 +67,12 @@ const Table01 = (props) => {
   ]
 
   const transformedData = transformData({ data })
+
+  const options = {
+    // height: 150,
+    movableRows: true,
+    cellEdited: onCellEditted2,
+  }
 
   return (
     <div>
