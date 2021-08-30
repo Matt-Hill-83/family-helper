@@ -77,6 +77,13 @@ const Table01 = (props) => {
       headerFilter: "input",
     },
     {
+      title: "Description",
+      field: "description",
+      hozAlign: "left",
+      editor: "input",
+      headerFilter: "input",
+    },
+    {
       title: "Type",
       field: "type",
       hozAlign: "left",
