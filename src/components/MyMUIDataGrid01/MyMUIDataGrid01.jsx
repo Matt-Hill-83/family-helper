@@ -1,38 +1,36 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-import * as React from "react"
-import {
-  DataGrid,
-  GridColumns,
-  GridEditRowsModel,
-  GridRowsProp,
-} from "@mui/x-data-grid"
+import React, { useCallback, useEffect, useState } from "react"
+import { DataGrid } from "@mui/x-data-grid"
+
 import {
   randomCreatedDate,
   randomTraderName,
   randomUpdatedDate,
 } from "@mui/x-data-grid-generator"
-import Alert from "@material-ui/lab/Alert"
 
-export default function CellEditControlGrid() {
-  const [editRowsModel, setEditRowsModel] = React.useState({})
+export default function MyMUIDataGrid01(props) {
+  const { onDataChanged } = props
 
-  const handleEditRowsModelChange = React.useCallback(
-    (model: GridEditRowsModel) => {
-      console.log("model", model) // zzz
-      setEditRowsModel(model)
-    },
-    []
-  )
+  const [editRowsModel, setEditRowsModel] = useState({})
+  const [rows, setRows] = useState([])
 
-  const handleCellEditCommit = React.useCallback((model: any) => {
+  useEffect(() => {
+    setRows(props.rows)
+    console.log(
+      "props.lists----------------------------------------",
+      props.rows
+    ) // zzz
+  }, [props.rows])
+
+  const handleEditRowsModelChange = useCallback((model) => {
+    setEditRowsModel(model)
+  }, [])
+
+  const handleCellEditCommit = useCallback((model) => {
     console.log("model-------------", model) // zzz
   }, [])
 
   return (
     <div style={{ width: "100%" }}>
-      <Alert severity="info" style={{ marginBottom: 8 }}>
-        <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
-      </Alert>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
@@ -46,7 +44,7 @@ export default function CellEditControlGrid() {
   )
 }
 
-const columns: GridColumns = [
+const columns = [
   { field: "name", headerName: "Name", width: 180, editable: true },
   { field: "age", headerName: "Age", type: "number", editable: true },
   {
@@ -65,7 +63,7 @@ const columns: GridColumns = [
   },
 ]
 
-const rows: GridRowsProp = [
+const xxxrows = [
   {
     id: 1,
     name: randomTraderName(),

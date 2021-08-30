@@ -14,7 +14,12 @@ import {
   onUpdateList,
 } from "./graphql/subscriptions"
 import { listLists, listTools } from "./graphql/queries"
-import { deleteList, updateList, updateTool } from "./graphql/mutations"
+import {
+  deleteList,
+  updateList,
+  updateTool,
+  updateToolType,
+} from "./graphql/mutations"
 
 import MainHeader from "./components/headers/MainHeader"
 import Lists from "./components/Lists/Lists"
@@ -25,7 +30,7 @@ import "semantic-ui-css/semantic.min.css"
 import "./App.css"
 import Table01 from "./components/Table01/Table01"
 import MyMUITable01 from "./components/MyMUITable01/MyMUITable01"
-import StartEditButtonGrid from "./components/MyMUIDataGrid01/MyMUIDataGrid01"
+import MyMUIDataGrid01 from "./components/MyMUIDataGrid01/MyMUIDataGrid01"
 
 Amplify.configure(awsConfig)
 
@@ -101,7 +106,7 @@ Amplify.configure(awsConfig)
 
 const getDummyData = () => {
   console.log("getDummyData+++++++++++++++++++++++++++++++++++++++++") // zzz
-  return [{ name: "foo" }]
+  return [{ name: "foo", id: 99 }]
 }
 
 function Main() {
@@ -183,26 +188,39 @@ function Main() {
     // setTest([...component])
   }
 
+  const onDataChangedMui = async (component, oldData) => {
+    // console.log("-------DC----------------oldData", oldData) // zzz
+    // console.log("-------DC----------------component", component) // zzz
+    // console.log("-------DC----------------test", test) // zzz
+    // setTest([...component])
+  }
+
   const onCellEditted = async (component, oldData) => {
+    console.log("component", component) // zzz
     if (!component) {
       return
     }
-    const cell = component?.__cell
+    const cell = component._cell
+    console.log("cell", cell) // zzz
     if (!cell) {
       return
     }
     console.clear()
-    console.log("cell", cell) // zzz
 
     const { row, column } = cell
+    console.log("row", row) // zzz
 
     console.log("-------CE----------------oldData", oldData) // zzz
     console.log("-------CE----------------component", component) // zzz
-    console.log("-------CE----------------test", test) // zzz
+
+    const rowData = row.data
+    const { id, name, description } = rowData
 
     const result = await API.graphql(
-      graphqlOperation(updateList, { input: row })
-      // graphqlOperation(updateList, { input: { id, title, description } })
+      // graphqlOperation(updateList, { input: row })
+      graphqlOperation(updateTool, {
+        input: { id, description, name },
+      })
     )
     console.log("result", result) // zzz
   }
@@ -240,14 +258,14 @@ function Main() {
                 {/* <Lists lists={state.lists} dispatch={dispatch} /> */}
                 <div>{JSON.stringify(test[0].name)}</div>
                 {/* <MyMUITable01 /> */}
-                <StartEditButtonGrid />
+                <MyMUIDataGrid01 rows={test} onDataChanged={onDataChangedMui} />
                 {/* <FlexGrowExample></FlexGrowExample> */}
-                {/* <Table01
+                <Table01
                   lists={test}
                   onCellEditted={onCellEditted}
                   // onChangeRow={onChangeRow}
                   onDataChanged={onDataChanged}
-                /> */}
+                />
               </Route>
             </Switch>
           </BrowserRouter>

@@ -43,10 +43,11 @@ const Table01 = (props) => {
 
   const onCellEditted2 = (newData) => {
     const tableData = tableRef?.current?.state?.data || []
-    onCellEditted(newData, tableData)
 
     console.log("onCellEditted", newData) // zzz
     console.log("tableData", tableData) // zzz
+
+    onCellEditted(newData, tableData)
   }
 
   const options = {
