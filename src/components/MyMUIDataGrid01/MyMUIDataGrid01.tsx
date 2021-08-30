@@ -18,10 +18,15 @@ export default function CellEditControlGrid() {
 
   const handleEditRowsModelChange = React.useCallback(
     (model: GridEditRowsModel) => {
+      console.log("model", model) // zzz
       setEditRowsModel(model)
     },
     []
   )
+
+  const handleCellEditCommit = React.useCallback((model: any) => {
+    console.log("model-------------", model) // zzz
+  }, [])
 
   return (
     <div style={{ width: "100%" }}>
@@ -34,6 +39,7 @@ export default function CellEditControlGrid() {
           columns={columns}
           editRowsModel={editRowsModel}
           onEditRowsModelChange={handleEditRowsModelChange}
+          onCellEditCommit={handleCellEditCommit}
         />
       </div>
     </div>
