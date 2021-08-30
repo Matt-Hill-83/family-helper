@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import "./styles.css"
+import css from "./Table01.module.scss"
 
 import "react-tabulator/lib/styles.css" // default theme
 import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css" // use Theme(s)
@@ -29,7 +29,7 @@ const Table01 = (props) => {
     const output = []
     data.forEach((row) => {
       const newRow = { ...row }
-      newRow.type = newRow.type === null ? "none" : newRow.type
+      newRow.type = newRow.type === null ? "none" : newRow?.type?.name
       output.push(newRow)
     })
     return output
@@ -37,9 +37,16 @@ const Table01 = (props) => {
 
   const editableColumns = [
     {
+      title: "Type",
+      field: "type",
+      hozAlign: "left",
+      editor: "input",
+      headerFilter: "input",
+    },
+    {
       title: "Name",
       field: "name",
-      width: 150,
+      // width: 150,
       editor: "input",
       headerFilter: "input",
     },
@@ -57,13 +64,6 @@ const Table01 = (props) => {
       editor: "input",
       headerFilter: "input",
     },
-    {
-      title: "Type",
-      field: "type",
-      hozAlign: "left",
-      editor: "input",
-      headerFilter: "input",
-    },
   ]
 
   const transformedData = transformData({ data })
@@ -75,7 +75,7 @@ const Table01 = (props) => {
   }
 
   return (
-    <div>
+    <div className={css.main}>
       <ReactTabulator
         ref={tableRef}
         options={options}
