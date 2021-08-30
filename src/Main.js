@@ -8,6 +8,8 @@ import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react"
 import Amplify, { API, graphqlOperation } from "aws-amplify"
 import awsConfig from "./aws-exports"
 
+import pick from "lodash.pick"
+
 import {
   onCreateList,
   onDeleteList,
@@ -188,13 +190,6 @@ function Main() {
     // setTest([...component])
   }
 
-  const onDataChangedMui = async (component, oldData) => {
-    // console.log("-------DC----------------oldData", oldData) // zzz
-    // console.log("-------DC----------------component", component) // zzz
-    // console.log("-------DC----------------test", test) // zzz
-    // setTest([...component])
-  }
-
   const onCellEditted = async (component, oldData) => {
     console.log("component", component) // zzz
     if (!component) {
@@ -215,12 +210,11 @@ function Main() {
 
     const rowData = row.data
     const { id, name, description } = rowData
+    const newData = pick(rowData, ["id", "name", "description"])
+    console.log("newData", newData) // zzz
 
     const result = await API.graphql(
-      // graphqlOperation(updateList, { input: row })
-      graphqlOperation(updateTool, {
-        input: { id, description, name },
-      })
+      graphqlOperation(updateTool, { input: newData })
     )
     console.log("result", result) // zzz
   }
@@ -256,7 +250,7 @@ function Main() {
               /> */}
               <Route path="/">
                 <Table01
-                  lists={test}
+                  rowData={test}
                   onCellEditted={onCellEditted}
                   onDataChanged={onDataChanged}
                 />
