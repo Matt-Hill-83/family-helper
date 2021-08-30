@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import "./styles.css"
 
 import "react-tabulator/lib/styles.css" // default theme
 import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css" // use Theme(s)
+
 import DateEditor from "react-tabulator/lib/editors/DateEditor"
 import MultiValueFormatter from "react-tabulator/lib/formatters/MultiValueFormatter"
 // import MultiSelectEditor from "react-tabulator/lib/editors/MultiSelectEditor";
-
-import "react-tabulator/lib/styles.css" // default theme
-import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css" // use Theme(s)
 
 import { ReactTabulator, reactFormatter } from "react-tabulator"
 
@@ -22,60 +20,41 @@ function SimpleButton(props) {
   return <button onClick={() => alert(rowData.name)}>{cellValue}</button>
 }
 
-function Table01(props) {
-  const { lists } = props
-  console.log("lists", lists) // zzzf
-  const [data, setData] = useState([...lists])
+const Table01 = (props) => {
+  const [data, setData] = useState([])
 
-  const [selectedName, setSelectedName] = useState("test")
+  const { onCellEditted, onDataChanged, onChangeRow } = props
+
+  console.log("data", data) // zzz
 
   useEffect(() => {
-    setData([props.lists])
-    console.log("[props.lists]", [props.lists]) // zzz
+    setData(props.lists)
+    console.log(
+      "props.lists----------------------------------------",
+      props.lists
+    ) // zzz
   }, [props.lists])
+  const tableRef = useRef(null)
 
-  const columns = [
-    { title: "Name", field: "name", width: 150 },
-    { title: "Type", field: "type", width: 150 },
-    // { title: "Desc", field: "desc", hozAlign: "left", formatter: "progress" },
-    { title: "Desc", field: "description", hozAlign: "left" },
-    { title: "Location", field: "location" },
-    // { title: "Qty", field: "qty" },
-    // { title: "User", field: "user", hozAlign: "center", formatter: "star" },
-    // {
-    //   title: "Passed?",
-    //   field: "type",
-    //   hozAlign: "center",
-    //   formatter: "tickCross",
-    // },
-    {
-      title: "Custom",
-      field: "custom",
-      hozAlign: "center",
-      editor: "input",
-      formatter: reactFormatter(
-        <SimpleButton
-          onSelect={(props) => {
-            setSelectedName(props)
-          }}
-        />
-      ),
-    },
-  ]
+  const onDataChanged2 = (newData) => {
+    console.log("newData", newData) // zzz
+    onDataChanged(newData, data)
+  }
+
+  const onCellEditted2 = (newData) => {
+    const tableData = tableRef?.current?.state?.data || []
+    onCellEditted(newData, tableData)
+
+    console.log("onCellEditted", newData) // zzz
+    console.log("tableData", tableData) // zzz
+  }
 
   const options = {
     // height: 150,
     // movableRows: true,
-    cellEdited: function (component) {
-      const cell = component._cell
-      const { value } = cell
-      console.log("value", value) // zzz
-      const field = cell.column.definition.field
-      console.log("field", field) // zzz
-    },
-    rowUpdated: function (row) {
-      console.log("row", row) // zzz
-    },
+    dataChanged: onDataChanged2,
+    // onChangeRow: onChangeRow2,
+    cellEdited: (newData) => onCellEditted2(newData),
   }
 
   const transformData = ({ data = [] }) => {
@@ -87,19 +66,6 @@ function Table01(props) {
     })
     return output
   }
-
-  // Editable Example:
-  const colorOptions = {
-    "": "&nbsp;",
-    red: "red",
-    green: "green",
-    yellow: "yellow",
-  }
-  const petOptions = [
-    { id: "cat", name: "cat" },
-    { id: "dog", name: "dog" },
-    { id: "fish", name: "fish" },
-  ]
 
   const editableColumns = [
     {
@@ -116,72 +82,25 @@ function Table01(props) {
       formatter: "progress",
       editor: "progress",
     },
-    {
-      title: "Favourite Color",
-      field: "color",
-      editor: "select",
-      editorParams: {
-        allowEmpty: true,
-        showListOnEmpty: true,
-        values: colorOptions,
-      },
-      headerFilter: "select",
-      headerFilterParams: { values: colorOptions },
-    },
-    {
-      title: "Date Of Birth",
-      field: "dob",
-      sorter: "date",
-      editor: DateEditor,
-      editorParams: { format: "MM/DD/YYYY" },
-    },
-    {
-      title: "Pets",
-      field: "pets",
-      sorter: (a, b) => a.toString().localeCompare(b.toString()),
-      // editor: MultiSelectEditor,
-      editorParams: { values: petOptions },
-      formatter: MultiValueFormatter,
-      formatterParams: { style: "PILL" },
-    },
-    {
-      title: "Passed?",
-      field: "passed",
-      hozAlign: "center",
-      formatter: "tickCross",
-      editor: true,
-    },
   ]
 
-  async function changeList({ row }) {
-    const { id, title, description } = row
-    const result = await API.graphql(
-      graphqlOperation(updateList, { input: { id, title, description } })
-    )
-    // dispatch({ type: "CLOSE_MODAL" })
-    console.log("Edit data with result: ", result)
-  }
-
-  const transformedData = transformData({ data: lists })
-  // const transformedData = transformData({ data: data1 })
+  const transformedData = [...data]
+  // const transformedData = transformData({ data: lists })
   console.log("transformedData", transformedData) // zzz
+
+  console.log("tableRef", tableRef) // zzz
 
   return (
     <div>
-      {/* <ReactTabulator
-        columns={columns}
-        data={transformedData}
-        // data={data}
-        data-custom-attr="test-custom-attribute"
-        options={options}
-        className="custom-css-class"
-      /> */}
-      {/* <h3>Editable Table</h3> */}
+      <button
+        onClick={(newData) => onCellEditted(newData)}
+        // dataChanged={(newData) => console.log("dataChanged", newData)}
+      />
       <ReactTabulator
+        ref={tableRef}
         options={options}
         columns={editableColumns}
         data={transformedData}
-        footerElement={<span>Footer</span>}
       />
     </div>
   )
