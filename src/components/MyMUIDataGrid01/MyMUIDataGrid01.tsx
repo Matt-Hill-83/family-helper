@@ -1,130 +1,41 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import * as React from "react"
-import Button from "@material-ui/core/Button"
 import {
-  GridColumns,
-  GridRowsProp,
-  useGridApiRef,
   DataGrid,
-  GridApiRef,
-  GridCellParams,
+  GridColumns,
+  GridEditRowsModel,
+  GridRowsProp,
 } from "@mui/x-data-grid"
 import {
   randomCreatedDate,
   randomTraderName,
   randomUpdatedDate,
 } from "@mui/x-data-grid-generator"
-import { createTheme, Theme } from "@material-ui/core/styles"
-import { makeStyles } from "@material-ui/styles"
+import Alert from "@material-ui/lab/Alert"
 
-const defaultTheme = createTheme()
-const useStyles = makeStyles(
-  (theme: Theme) => ({
-    root: {
-      justifyContent: "center",
-      display: "flex",
-      borderBottom: `1px solid ${theme.palette.divider}`,
+export default function CellEditControlGrid() {
+  const [editRowsModel, setEditRowsModel] = React.useState({})
+
+  const handleEditRowsModelChange = React.useCallback(
+    (model: GridEditRowsModel) => {
+      setEditRowsModel(model)
     },
-  }),
-  { defaultTheme }
-)
-
-interface EditToolbarProps {
-  apiRef: GridApiRef
-  selectedCellParams?: any
-  setSelectedCellParams: (value: any) => void
-}
-
-function EditToolbar(props: EditToolbarProps) {
-  const { selectedCellParams, apiRef, setSelectedCellParams } = props
-  const classes = useStyles()
-
-  const handleClick = () => {
-    if (!selectedCellParams) {
-      return
-    }
-    const { id, field, cellMode } = selectedCellParams
-    if (cellMode === "edit") {
-      apiRef.current.commitCellChange({ id, field })
-      apiRef.current.setCellMode(id, field, "view")
-      setSelectedCellParams({ ...selectedCellParams, cellMode: "view" })
-    } else {
-      apiRef.current.setCellMode(id, field, "edit")
-      setSelectedCellParams({ ...selectedCellParams, cellMode: "edit" })
-    }
-  }
-
-  const handleMouseDown = (event: any) => {
-    // Keep the focus in the cell
-    event.preventDefault()
-  }
-
-  return (
-    <div className={classes.root}>
-      <Button
-        onClick={handleClick}
-        onMouseDown={handleMouseDown}
-        disabled={!selectedCellParams}
-        color="primary"
-      >
-        {selectedCellParams?.cellMode === "edit" ? "Save" : "Edit"}
-      </Button>
-    </div>
+    []
   )
-}
-
-export default function StartEditButtonGrid() {
-  const apiRef = useGridApiRef()
-  const [selectedCellParams, setSelectedCellParams] =
-    React.useState<GridCellParams | null>(null)
-
-  const handleCellClick = React.useCallback((params: GridCellParams) => {
-    setSelectedCellParams(params)
-  }, [])
-
-  const handleDoubleCellClick = React.useCallback((params, event) => {
-    event.defaultMuiPrevented = true
-  }, [])
-
-  // Prevent from rolling back on escape
-  const handleCellKeyDown = React.useCallback((params, event) => {
-    if (
-      ["Escape", "Delete", "Backspace", "Enter"].includes(
-        (event as React.KeyboardEvent).key
-      )
-    ) {
-      event.defaultMuiPrevented = true
-    }
-  }, [])
-
-  // Prevent from committing on focus out
-  const handleCellFocusOut = React.useCallback((params, event) => {
-    if (params.cellMode === "edit" && event) {
-      event.defaultMuiPrevented = true
-    }
-  }, [])
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        // apiRef={apiRef}
-        onCellClick={handleCellClick}
-        onCellDoubleClick={handleDoubleCellClick}
-        onCellFocusOut={handleCellFocusOut}
-        onCellKeyDown={handleCellKeyDown}
-        components={{
-          Toolbar: EditToolbar,
-        }}
-        componentsProps={{
-          toolbar: {
-            selectedCellParams,
-            apiRef,
-            setSelectedCellParams,
-          },
-        }}
-      />
+    <div style={{ width: "100%" }}>
+      <Alert severity="info" style={{ marginBottom: 8 }}>
+        <code>editRowsModel: {JSON.stringify(editRowsModel)}</code>
+      </Alert>
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          editRowsModel={editRowsModel}
+          onEditRowsModelChange={handleEditRowsModelChange}
+        />
+      </div>
     </div>
   )
 }
