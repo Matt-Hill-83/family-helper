@@ -1,0 +1,7 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.custom-css-class {
+  border: 4px solid blue !important;
+}

@@ -24,6 +24,8 @@ import ListModal from "./components/modals/ListModal"
 import "semantic-ui-css/semantic.min.css"
 import "./App.css"
 import Table01 from "./components/Table01/Table01"
+import MyMUITable01 from "./components/MyMUITable01/MyMUITable01"
+import StartEditButtonGrid from "./components/MyMUIDataGrid01/MyMUIDataGrid01"
 
 Amplify.configure(awsConfig)
 
@@ -237,12 +239,15 @@ function Main() {
               <Route path="/">
                 {/* <Lists lists={state.lists} dispatch={dispatch} /> */}
                 <div>{JSON.stringify(test[0].name)}</div>
-                <Table01
+                <MyMUITable01 />
+                <StartEditButtonGrid />
+                {/* <FlexGrowExample></FlexGrowExample> */}
+                {/* <Table01
                   lists={test}
                   onCellEditted={onCellEditted}
                   // onChangeRow={onChangeRow}
                   onDataChanged={onDataChanged}
-                />
+                /> */}
               </Route>
             </Switch>
           </BrowserRouter>
