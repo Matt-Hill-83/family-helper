@@ -8,14 +8,12 @@ import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css" // use Theme(
 // import MultiValueFormatter from "react-tabulator/lib/formatters/MultiValueFormatter"
 // import MultiSelectEditor from "react-tabulator/lib/editors/MultiSelectEditor";
 
-import { ReactTabulator, reactFormatter } from "react-tabulator"
+import { ReactTabulator } from "react-tabulator"
 
 const Table01 = (props) => {
   const [data, setData] = useState([])
 
   const { onCellEditted } = props
-
-  console.log("data", data) // zzz
 
   useEffect(() => {
     setData(props.rowData)
@@ -24,9 +22,6 @@ const Table01 = (props) => {
 
   const onCellEditted2 = (newData) => {
     const tableData = tableRef?.current?.state?.data || []
-
-    console.log("onCellEditted", newData) // zzz
-    console.log("tableData", tableData) // zzz
 
     onCellEditted(newData, tableData)
   }
@@ -41,7 +36,7 @@ const Table01 = (props) => {
     const output = []
     data.forEach((row) => {
       const newRow = { ...row }
-      newRow.type = newRow.type === null ? "test" : newRow.type
+      newRow.type = newRow.type === null ? "none" : newRow.type
       output.push(newRow)
     })
     return output
@@ -78,18 +73,10 @@ const Table01 = (props) => {
     },
   ]
 
-  const transformedData = [...data]
-  // const transformedData = transformData({ data })
-  console.log("transformedData", transformedData) // zzz
-
-  console.log("tableRef", tableRef) // zzz
+  const transformedData = transformData({ data })
 
   return (
     <div>
-      <button
-        onClick={(newData) => onCellEditted(newData)}
-        // dataChanged={(newData) => console.log("dataChanged", newData)}
-      />
       <ReactTabulator
         ref={tableRef}
         options={options}

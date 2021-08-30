@@ -1,38 +1,30 @@
-import { cloneElement, useEffect, useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { Button, Container, Icon } from "semantic-ui-react"
 
-import clone from "lodash.clone"
+import pick from "lodash.pick"
 
 import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react"
 import Amplify, { API, graphqlOperation } from "aws-amplify"
 import awsConfig from "./aws-exports"
-
-import pick from "lodash.pick"
 
 import {
   onCreateList,
   onDeleteList,
   onUpdateList,
 } from "./graphql/subscriptions"
-import { listLists, listTools } from "./graphql/queries"
-import {
-  deleteList,
-  updateList,
-  updateTool,
-  updateToolType,
-} from "./graphql/mutations"
+
+import { listTools } from "./graphql/queries"
+import { updateTool, updateToolType } from "./graphql/mutations"
 
 import MainHeader from "./components/headers/MainHeader"
 import Lists from "./components/Lists/Lists"
 import ListItems from "./ListItems"
 import ListModal from "./components/modals/ListModal"
+import Table01 from "./components/Table01/Table01"
 
 import "semantic-ui-css/semantic.min.css"
 import "./App.css"
-import Table01 from "./components/Table01/Table01"
-import MyMUITable01 from "./components/MyMUITable01/MyMUITable01"
-import MyMUIDataGrid01 from "./components/MyMUIDataGrid01/MyMUIDataGrid01"
 
 Amplify.configure(awsConfig)
 
@@ -66,7 +58,6 @@ Amplify.configure(awsConfig)
 //         id: "",
 //       }
 //     case "DELETE_LIST":
-//       console.log(action.value)
 //       deleteListById(action.value)
 //       return { ...state }
 //     case "DELETE_LIST_RESULT":
@@ -83,7 +74,6 @@ Amplify.configure(awsConfig)
 //       delete newValue.children
 //       delete newValue.listItems
 //       delete newValue.dispatch
-//       console.log(newValue)
 //       return {
 //         ...state,
 //         isModalOpen: true,
@@ -94,7 +84,6 @@ Amplify.configure(awsConfig)
 //       }
 //     }
 //     default:
-//       console.log("Default action for: ", action)
 //       return state
 //   }
 // }
@@ -103,11 +92,9 @@ Amplify.configure(awsConfig)
 //   const result = await API.graphql(
 //     graphqlOperation(deleteList, { input: { id } })
 //   )
-//   console.log("deleted", result)
 // }
 
 const getDummyData = () => {
-  console.log("getDummyData+++++++++++++++++++++++++++++++++++++++++") // zzz
   return [{ name: "foo", id: 99 }]
 }
 
@@ -115,21 +102,11 @@ function Main() {
   // const [state, dispatch] = useReducer(listReducer, intialState)
 
   const [test, setTest] = useState(getDummyData)
-  console.log(
-    "--------------------------------------test---------main Render",
-    test
-  ) // zzz
 
   async function fetchList() {
-    console.log("fetchList--------------------------------------") // zzz
-    // const { data } = await API.graphql(graphqlOperation(listLists))
-    // dispatch({ type: "UPDATE_LISTS", value: data.listLists.items })
-
     const { data } = await API.graphql(graphqlOperation(listTools))
 
-    // dispatch({ type: "UPDATE_LISTS", value: data.listTools.items })
     const freshList = data.listTools.items
-    console.log("freshList", freshList) // zzz
     setTest(freshList)
   }
 
@@ -141,7 +118,6 @@ function Main() {
   //   const createListSub = API.graphql(graphqlOperation(onCreateList)).subscribe(
   //     {
   //       next: ({ _, value }) => {
-  //         console.log("onCreateList called")
   //         dispatch({ type: "UPDATE_LISTS", value: [value.data.onCreateList] })
   //       },
   //     }
@@ -149,7 +125,6 @@ function Main() {
   //   const updateListSub = API.graphql(graphqlOperation(onUpdateList)).subscribe(
   //     {
   //       next: ({ _, value }) => {
-  //         console.log("onUpdateList called", value)
   //         dispatch({
   //           type: "UPDATE_LIST_RESULT",
   //           value: value.data.onUpdateList,
@@ -160,7 +135,6 @@ function Main() {
   //   const deleteListSub = API.graphql(graphqlOperation(onDeleteList)).subscribe(
   //     {
   //       next: ({ _, value }) => {
-  //         console.log("onDeleteList called")
   //         dispatch({
   //           type: "DELETE_LIST_RESULT",
   //           value: value.data.onDeleteList.id,
@@ -184,70 +158,53 @@ function Main() {
   // const clonedData = cloneData(test)
 
   const onDataChanged = async (component, oldData) => {
-    // console.log("-------DC----------------oldData", oldData) // zzz
-    // console.log("-------DC----------------component", component) // zzz
-    // console.log("-------DC----------------test", test) // zzz
     // setTest([...component])
   }
 
   const onCellEditted = async (component, oldData) => {
-    console.log("component", component) // zzz
     if (!component) {
       return
     }
+
     const cell = component._cell
-    console.log("cell", cell) // zzz
     if (!cell) {
       return
     }
-    console.clear()
 
-    const { row, column } = cell
-    console.log("row", row) // zzz
-
-    console.log("-------CE----------------oldData", oldData) // zzz
-    console.log("-------CE----------------component", component) // zzz
-
+    const { row } = cell
     const rowData = row.data
-    const { id, name, description } = rowData
     const newData = pick(rowData, ["id", "name", "description"])
-    console.log("newData", newData) // zzz
 
-    const result = await API.graphql(
-      graphqlOperation(updateTool, { input: newData })
-    )
-    console.log("result", result) // zzz
+    await API.graphql(graphqlOperation(updateTool, { input: newData }))
   }
-
-  console.log("+_+_+_test", test) // zzz
 
   return (
     <AmplifyAuthenticator>
       <Container style={{ height: "100vh" }}>
         <AmplifySignOut />
-        {/* <Button
+        <Button
           className="floatingButton"
-          onClick={() => dispatch({ type: "OPEN_MODAL" })}
+          // onClick={() => dispatch({ type: "OPEN_MODAL" })}
         >
           <Icon name="plus" className="floatingButton_icon" />
-        </Button> */}
+        </Button>
         <div className="App">
           <MainHeader />
 
           <BrowserRouter>
             <Switch>
-              {/* <Route
+              <Route
                 path="/list/:slug"
                 render={(props) => {
                   return (
                     <ListItems
-                      {...state.lists.filter(
+                      {...test.filter(
                         (i) => i.slug === props.match.params.slug
                       )[0]}
                     />
                   )
                 }}
-              /> */}
+              />
               <Route path="/">
                 <Table01
                   rowData={test}
