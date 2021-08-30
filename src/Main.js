@@ -255,15 +255,9 @@ function Main() {
                 }}
               /> */}
               <Route path="/">
-                {/* <Lists lists={state.lists} dispatch={dispatch} /> */}
-                <div>{JSON.stringify(test[0].name)}</div>
-                {/* <MyMUITable01 /> */}
-                <MyMUIDataGrid01 rows={test} onDataChanged={onDataChangedMui} />
-                {/* <FlexGrowExample></FlexGrowExample> */}
                 <Table01
                   lists={test}
                   onCellEditted={onCellEditted}
-                  // onChangeRow={onChangeRow}
                   onDataChanged={onDataChanged}
                 />
               </Route>

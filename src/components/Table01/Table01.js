@@ -84,6 +84,13 @@ const Table01 = (props) => {
       headerFilter: "input",
     },
     {
+      title: "Location",
+      field: "location",
+      hozAlign: "left",
+      editor: "input",
+      headerFilter: "input",
+    },
+    {
       title: "Type",
       field: "type",
       hozAlign: "left",
