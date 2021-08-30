@@ -149,23 +149,7 @@ function Main() {
   //   }
   // }, [])
 
-  const cloneData = (data) => {
-    return data.map((item) => {
-      return { ...item }
-    })
-  }
-  const clonedData = test
-  // const clonedData = cloneData(test)
-
-  const onDataChanged = async (component, oldData) => {
-    // setTest([...component])
-  }
-
-  const onCellEditted = async (component, oldData) => {
-    if (!component) {
-      return
-    }
-
+  const onCellEditted = async (component) => {
     const cell = component._cell
     if (!cell) {
       return
@@ -175,7 +159,7 @@ function Main() {
     const rowData = row.data
     const newData = pick(rowData, ["id", "name", "description"])
 
-    await API.graphql(graphqlOperation(updateTool, { input: newData }))
+    API.graphql(graphqlOperation(updateTool, { input: newData }))
   }
 
   return (
@@ -206,11 +190,7 @@ function Main() {
                 }}
               />
               <Route path="/">
-                <Table01
-                  rowData={test}
-                  onCellEditted={onCellEditted}
-                  onDataChanged={onDataChanged}
-                />
+                <Table01 rowData={test} onCellEditted={onCellEditted} />
               </Route>
             </Switch>
           </BrowserRouter>

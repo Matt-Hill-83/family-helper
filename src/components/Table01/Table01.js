@@ -12,12 +12,12 @@ import { ReactTabulator } from "react-tabulator"
 
 const Table01 = (props) => {
   const [data, setData] = useState([])
-
   const { onCellEditted } = props
 
   useEffect(() => {
     setData(props.rowData)
   }, [props.rowData])
+
   const tableRef = useRef(null)
 
   const onCellEditted2 = (newData) => {
