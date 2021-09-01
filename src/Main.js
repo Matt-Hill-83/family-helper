@@ -57,6 +57,7 @@ function Main() {
       {
         next: ({ _, value }) => {
           console.log("value", value) // zzz
+          fetchList()
           // dispatch({
           //   type: "UPDATE_LIST_RESULT",
           //   value: value.data.onUpdateList,
@@ -122,6 +123,7 @@ function Main() {
                 }}
               />
               <Route path="/">
+                <Table01 rowData={rowData} onCellEditted={onCellEditted} />
                 <Table01 rowData={rowData} onCellEditted={onCellEditted} />
               </Route>
             </Switch>
