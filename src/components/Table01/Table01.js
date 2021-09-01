@@ -28,6 +28,18 @@ const Table01 = (props) => {
     return output
   }
 
+  const colorOptions = {
+    "": "&nbsp;",
+    red: "red",
+    green: "green",
+    yellow: "yellow",
+  }
+  const petOptions = [
+    { id: "cat", name: "cat" },
+    { id: "dog", name: "dog" },
+    { id: "fish", name: "fish" },
+  ]
+
   const editableColumns = [
     {
       title: "Type",
@@ -35,6 +47,18 @@ const Table01 = (props) => {
       hozAlign: "left",
       editor: "input",
       headerFilter: "input",
+    },
+    {
+      title: "Favourite Color",
+      field: "color",
+      editor: "select",
+      editorParams: {
+        allowEmpty: true,
+        showListOnEmpty: true,
+        values: colorOptions,
+      },
+      headerFilter: "select",
+      headerFilterParams: { values: colorOptions },
     },
     {
       title: "Name",

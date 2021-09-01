@@ -23,6 +23,7 @@ import Lists from "./components/Lists/Lists"
 import ListItems from "./ListItems"
 import ListModal from "./components/modals/ListModal"
 import Table01 from "./components/Table01/Table01"
+import Table02 from "./components/Table02/Table02"
 
 import "semantic-ui-css/semantic.min.css"
 import "./App.css"
@@ -124,7 +125,7 @@ function Main() {
               />
               <Route path="/">
                 <Table01 rowData={rowData} onCellEditted={onCellEditted} />
-                <Table01 rowData={rowData} onCellEditted={onCellEditted} />
+                <Table02 rowData={rowData} onCellEditted={onCellEditted} />
               </Route>
             </Switch>
           </BrowserRouter>
