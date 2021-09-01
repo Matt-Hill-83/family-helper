@@ -18,13 +18,6 @@ const Table01 = (props) => {
     setData(props.rowData)
   }, [props.rowData])
 
-  const tableRef = useRef(null)
-
-  const onCellEditted2 = (newData) => {
-    // const tableData = tableRef?.current?.state?.data || []
-    onCellEditted(newData)
-  }
-
   const transformData = ({ data = [] }) => {
     const output = []
     data.forEach((row) => {
@@ -71,13 +64,12 @@ const Table01 = (props) => {
   const options = {
     // height: 150,
     movableRows: true,
-    cellEdited: onCellEditted2,
+    cellEdited: onCellEditted,
   }
 
   return (
     <div className={css.main}>
       <ReactTabulator
-        ref={tableRef}
         options={options}
         columns={editableColumns}
         data={transformedData}
