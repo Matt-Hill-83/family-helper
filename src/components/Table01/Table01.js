@@ -12,7 +12,8 @@ import { ReactTabulator } from "react-tabulator"
 
 const Table01 = (props) => {
   const [data, setData] = useState([])
-  const { onCellEditted } = props
+  const { onCellEditted, toolTypes } = props
+  // const { onCellEditted, toolTypes, toolTypeNames } = props
 
   useEffect(() => {
     setData(props.rowData)
@@ -22,43 +23,45 @@ const Table01 = (props) => {
     const output = []
     data.forEach((row) => {
       const newRow = { ...row }
-      newRow.type = newRow.type === null ? "none" : newRow?.type?.name
+      newRow.type = newRow.type === null ? "" : newRow?.type?.name
       output.push(newRow)
     })
     return output
   }
 
-  const colorOptions = {
-    "": "&nbsp;",
-    red: "red",
-    green: "green",
-    yellow: "yellow",
-  }
-  const petOptions = [
-    { id: "cat", name: "cat" },
-    { id: "dog", name: "dog" },
-    { id: "fish", name: "fish" },
-  ]
+  const toolTypeNames = {}
+  toolTypes.forEach((item) => {
+    if (item.name) {
+      toolTypeNames[item.name] = item.name
+    }
+  })
+
+  // const toolTypeNames = {
+  //   "": "&nbsp;",
+  //   red: "red",
+  //   green: "green",
+  //   yellow: "yellow",
+  // }
 
   const editableColumns = [
+    // {
+    //   title: "Type",
+    //   field: "type",
+    //   hozAlign: "left",
+    //   editor: "input",
+    //   headerFilter: "input",
+    // },
     {
       title: "Type",
       field: "type",
-      hozAlign: "left",
-      editor: "input",
-      headerFilter: "input",
-    },
-    {
-      title: "Favourite Color",
-      field: "color",
       editor: "select",
       editorParams: {
         allowEmpty: true,
         showListOnEmpty: true,
-        values: colorOptions,
+        values: toolTypeNames,
       },
       headerFilter: "select",
-      headerFilterParams: { values: colorOptions },
+      headerFilterParams: { values: toolTypeNames },
     },
     {
       title: "Name",
@@ -88,7 +91,7 @@ const Table01 = (props) => {
   const options = {
     // height: 150,
     movableRows: true,
-    cellEdited: onCellEditted,
+    cellEdited: (newData) => onCellEditted(newData),
   }
 
   return (

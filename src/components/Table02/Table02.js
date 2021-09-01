@@ -182,10 +182,6 @@ class Home extends React.Component {
   }
 
   render() {
-    const options = {
-      height: 150,
-      movableRows: true,
-    }
     return (
       <div>
         <h3>Editable Table</h3>

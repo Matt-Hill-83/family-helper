@@ -15,13 +15,12 @@ import {
   onUpdateTool,
 } from "./graphql/subscriptions"
 
-import { listTools } from "./graphql/queries"
+import { listTools, listToolTypes } from "./graphql/queries"
 import { updateTool } from "./graphql/mutations"
 
 import MainHeader from "./components/headers/MainHeader"
-import Lists from "./components/Lists/Lists"
 import ListItems from "./ListItems"
-import ListModal from "./components/modals/ListModal"
+
 import Table01 from "./components/Table01/Table01"
 import Table02 from "./components/Table02/Table02"
 
@@ -36,14 +35,22 @@ const getDummyData = () => {
 
 function Main() {
   const [rowData, setRowData] = useState(getDummyData)
+  const [toolTypes, setToolTypes] = useState([])
 
   useEffect(() => {
     fetchList()
+    fetchToolTypes()
   }, [])
 
   async function fetchList() {
     const { data } = await API.graphql(graphqlOperation(listTools))
     setRowData(data?.listTools?.items || [])
+  }
+
+  async function fetchToolTypes() {
+    const { data } = await API.graphql(graphqlOperation(listToolTypes))
+    console.log("data", data) // zzz
+    setToolTypes(data?.listToolTypes?.items || [])
   }
 
   useEffect(() => {
@@ -83,17 +90,53 @@ function Main() {
     }
   }, [])
 
+  const getToolTypes = () => {
+    let toolTypes
+    setToolTypes((currentState) => {
+      // Do not change the state by getting the updated state
+      toolTypes = currentState
+      return currentState
+    })
+    return toolTypes
+  }
   const onCellEditted = async (component) => {
     const cell = component._cell
-    if (!cell) {
-      return
-    }
+    // if (!cell) {
+    //   return
+    // }
 
     const { row } = cell
+
+    console.log("row", row) // zzz
     const rowData = row.data
     const newData = pick(rowData, ["id", "name", "description"])
+    const type = getToolTypeId(rowData.type)
+    console.log("type", type) // zzz
+    newData.toolTypeId = type
+    console.log("newData", newData) // zzz
 
     API.graphql(graphqlOperation(updateTool, { input: newData }))
+  }
+
+  const toolTypeNames = {}
+  toolTypes.forEach((item) => {
+    if (item.name) {
+      toolTypeNames[item.name] = item.name
+    }
+  })
+
+  const getToolTypeId = (name) => {
+    const toolTypes = getToolTypes()
+    console.log("toolTypes", toolTypes) // zzz
+    const item = toolTypes.find((item) => item.name === name)
+    console.log("item", item) // zzz
+    // return item
+    return item.id
+  }
+
+  const table01Props = {
+    toolTypes: toolTypes,
+    toolTypeNames: toolTypeNames,
   }
 
   return (
@@ -124,7 +167,11 @@ function Main() {
                 }}
               />
               <Route path="/">
-                <Table01 rowData={rowData} onCellEditted={onCellEditted} />
+                <Table01
+                  rowData={rowData}
+                  onCellEditted={onCellEditted}
+                  {...table01Props}
+                />
                 <Table02 rowData={rowData} onCellEditted={onCellEditted} />
               </Route>
             </Switch>
